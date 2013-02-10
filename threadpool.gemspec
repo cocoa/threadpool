@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = Threadpool::VERSION
   gem.authors       = ["cocoa"]
   gem.email         = ["cocoa@scanpix.es"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Thread Pool implementation in Ruby in order to limit the number of simultaneous running threads.}
+  gem.summary       = %q{Use this code if you want to process multiple requests in parallel but not simultaneously.}
+  gem.homepage      = "http://github.com/cocoa"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
