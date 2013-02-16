@@ -1,6 +1,6 @@
 # Threadpool
 
-TODO: Write a gem description
+Based on Ruby cooking, this gem allows to run a limited pool of threads simultaneously. The gem doesn't mantain a pool of threads acepting works, it creates a new thread for every incoming work and run N of them simultaneously instead.
 
 ## Installation
 
@@ -18,7 +18,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+		include Treadpool
+		tp = Tpool.new(2)
+		1.upto(10) do |i|
+			tp.dispatch(i) do |n|
+				puts "Started #{n}..."
+				sleep(3)
+				puts "Ended #{n}..."
+			end
+		end
+		tp.shutdown
 
 ## Contributing
 
