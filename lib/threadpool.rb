@@ -1,46 +1,54 @@
 require 'thread'
 
-class ThreadPool
+module Threadpool
+  class Tpool
 
-  def initialize(max_size)
-    @pool = []
-    @max_size = max_size
-    @pool_mutex = Mutex.new
-    @cv = ConditionVariable.new  
-  end
+    attr_reader :max_size, :pool
 
-  def dispatch(*args)    
-    Thread.new do
-      @pool_mutex.synchronize do
-        while @pool.size >= @max_size          
-          print "Pool is full; waiting to run #{args.join(',')}...\n" if $DEBUG
-          @cv.wait(@pool_mutex)
-        end
-      end
-      @pool << Thread.current
-      begin
-        yield(*args)
-      rescue => e
-        exception(self, e, *args)
-      ensure
+    def initialize(max_size)
+      @pool = []
+      @max_size = max_size
+      @pool_mutex = Mutex.new
+      @cv = ConditionVariable.new  
+    end
+
+    def dispatch(*args)    
+      Thread.new do
         @pool_mutex.synchronize do
-          @pool.delete(Thread.current)
-          @cv.signal            
+          while @pool.size >= @max_size          
+            print "Pool is full; waiting to run #{args.join(',')}...\n" if $DEBUG
+            @cv.wait(@pool_mutex)
+          end
+        end
+        @pool << Thread.current
+        begin
+          yield(*args)
+        rescue => e
+          exception(self, e, *args)
+        ensure
+          @pool_mutex.synchronize do
+            @pool.delete(Thread.current)
+            @cv.signal            
+          end
         end
       end
     end
-  end
 
-  def shutdown
-  	sleep(0.1)
-    @pool_mutex.synchronize {@cv.wait(@pool_mutex) until @pool.empty? }
-  end
+    def shutdown
+     sleep(0.1)
+     @pool_mutex.synchronize {@cv.wait(@pool_mutex) until @pool.empty? }
+   end
 
-  def exception(thread, exception, *original_args)
+   def exception(thread, exception, *original_args)
     puts "Exception in thread #{thread}: #{exception}"
-  end  
-end
+  end
 
+  def self.version_string
+    "ThreadPool version #{VERSION}"
+  end
+
+end
+end
 
 
 
