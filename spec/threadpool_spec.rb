@@ -18,9 +18,9 @@ describe Threadpool do
 		tp = Tpool.new(max_threads)
 		1.upto(10) do |i|
 			tp.dispatch(i) do |n|
-				#puts "Started #{n}..."
+				puts "Started #{n}..."
 				sleep(3)
-				#puts "Ended #{n}..."
+				puts "Ended #{n}..."
 			end
 		end
 		sleep(0.1)

@@ -35,19 +35,20 @@ module Threadpool
     end
 
     def shutdown
-     sleep(0.1)
-     @pool_mutex.synchronize {@cv.wait(@pool_mutex) until @pool.empty? }
-   end
+      sleep(0.1)
+      @pool_mutex.synchronize {@cv.wait(@pool_mutex) until @pool.empty? }
+    end
 
-   def exception(thread, exception, *original_args)
-    puts "Exception in thread #{thread}: #{exception}"
+    def exception(thread, exception, *original_args)
+      puts "Exception in thread #{thread}: #{exception}"
+    end
+
+    def self.version_string
+      "ThreadPool version #{VERSION}"
+    end
   end
 
-  def self.version_string
-    "ThreadPool version #{VERSION}"
-  end
 
-end
 end
 
 
