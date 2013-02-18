@@ -50,20 +50,3 @@ module Threadpool
 
 
 end
-
-
-
-=begin
-$DEBUG = true
-pool = ThreadPool.new(3)
-
-1.upto(5) do |i| 
-  pool.dispatch(i) do |i|
-    print "Job #{i} started.\n"
-    sleep(5-i)
-    print "Job #{i} complete.\n"
-  end
-end
-
-pool.shutdown
-=end

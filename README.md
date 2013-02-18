@@ -6,7 +6,7 @@ Based on Ruby cooking, this gem allows to run a limited pool of threads simultan
 
 Add this line to your application's Gemfile:
 
-    gem 'threadpool'
+    gem 'threadpool','0.0.2'
 
 And then execute:
 
